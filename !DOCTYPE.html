@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora subida salarial 2025–2028 - CSIF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0.2rem 0 0.6rem;
+    }
+    label {
+      display: block;
+      margin-top: 0.8rem;
+      font-weight: bold;
+    }
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.4rem;
+      margin-top: 0.2rem;
+      box-sizing: border-box;
+    }
+    .amarillo {
+      background-color: #fff8a6;
+    }
+    .resultado {
+      background-color: #f5f5f5;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+    }
+    .nota {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora subidas sueldo bruto 2025–2028 - CSIF</h1>
+  <p>Rellena solo las casillas amarillas; el resto se calcula automáticamente.</p>
+
+  <label for="sueldoBase">
+    Sueldo mensual bruto sin productividad<br />
+    <small>(Sobre este sueldo se aplican las subidas)</small>
+  </label>
+  <input
+    id="sueldoBase"
+    class="amarillo"
+    type="text"
+    placeholder="Importe en euros. Puedes usar coma o punto."
+  />
+
+  <label for="productividad">
+    Productividad mensual<br />
+    <small>Importe de productividad. No se le aplica la subida.</small>
+  </label>
+  <input
+    id="productividad"
+    class="amarillo"
+    type="text"
+    placeholder="Importe en euros. Puedes usar coma o punto."
+  />
+
+  <button id="calcular">Calcular</button>
+
+  <label for="actual">Sueldo bruto mensual actual</label>
+  <input id="actual" class="resultado" type="text" readonly />
+
+  <label for="s2025">Sueldo bruto con la subida 2025 (2,5%)</label>
+  <input id="s2025" class="resultado" type="text" readonly />
+
+  <label for="a2025">Atrasos 2025 (14 pagas)</label>
+  <input id="a2025" class="resultado" type="text" readonly />
+
+  <label for="s2026">Sueldo bruto con la subida 2026 (4% sobre el sueldo base actual)</label>
+  <input id="s2026" class="resultado" type="text" readonly />
+
+  <label for="a2026">Atrasos 2026 (0,5% sobre el sueldo base, 14 pagas)</label>
+  <input id="a2026" class="resultado" type="text" readonly />
+
+  <label for="s2027">Sueldo bruto con la subida 2027 (8,5% sobre el sueldo base)</label>
+  <input id="s2027" class="resultado" type="text" readonly />
+
+  <label for="s2028">Sueldo bruto con la subida 2028 (11,5% sobre el sueldo base)</label>
+  <input id="s2028" class="resultado" type="text" readonly />
+
+  <p class="nota">
+    Las subidas (2,5 %, 4 %, 8,5 % y 11,5 %) se calculan sobre el salario bruto sin incluir la productividad.
+    El resultado es orientativo y puede variar según la situación de cada empleado público.
+  </p>
+
+  <script>
+    function parseEuro(str) {
+      if (!str) return 0;
+      // Permitir coma o punto como separador decimal
+      str = str.replace(".", "").replace(",", ".");
+      const n = parseFloat(str);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function formatEuro(num) {
+      return num.toLocaleString("es-ES", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + " €";
+    }
+
+    document.getElementById("calcular").addEventListener("click", function () {
+      const sueldoBase = parseEuro(document.getElementById("sueldoBase").value);
+      const productividad = parseEuro(document.getElementById("productividad").value);
+
+      // Sueldo actual
+      const actual = sueldoBase + productividad;
+
+      // Subida 2025: +2,5% sobre sueldo base
+      const sueldo2025 = sueldoBase * 1.025 + productividad;
+      const atrasos2025 = sueldoBase * 0.025 * 14; // 2,5% de 14 pagas
+
+      // Subida 2026: +4% sobre el sueldo base (total acumulado 4% sobre base)
+      const sueldo2026 = sueldoBase * 1.04 + productividad;
+
+      // Atrasos 2026: 0,5% sobre el sueldo base en 14 pagas
+      const atrasos2026 = sueldoBase * 0.005 * 14;
+
+      // Subida 2027: 8,5% sobre el sueldo base
+      const sueldo2027 = sueldoBase * 1.085 + productividad;
+
+      // Subida 2028: 11,5% sobre el sueldo base
+      const sueldo2028 = sueldoBase * 1.115 + productividad;
+
+      document.getElementById("actual").value = formatEuro(actual);
+      document.getElementById("s2025").value = formatEuro(sueldo2025);
+      document.getElementById("a2025").value = formatEuro(atrasos2025);
+      document.getElementById("s2026").value = formatEuro(sueldo2026);
+      document.getElementById("a2026").value = formatEuro(atrasos2026);
+      document.getElementById("s2027").value = formatEuro(sueldo2027);
+      document.getElementById("s2028").value = formatEuro(sueldo2028);
+    });
+  </script>
+</body>
+</html>
