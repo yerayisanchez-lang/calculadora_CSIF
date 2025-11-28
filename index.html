@@ -3,111 +3,306 @@
 <head>
   <meta charset="UTF-8" />
   <title>Calculadora subida salarial 2025–2028 - CSIF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root {
+      --csif-green: #007042;
+      --csif-green-light: #4caf50;
+      --csif-bg: #f3f7f4;
+      --csif-text-dark: #123026;
+      --csif-text-muted: #5f6f68;
+      --csif-yellow: #fff8c2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      line-height: 1.5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #e6f3ec 0, var(--csif-bg) 40%, #fdfdfd 100%);
+      margin: 0;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
     }
-    h1 {
+
+    .card {
+      background: #ffffff;
+      max-width: 780px;
+      width: 100%;
+      padding: 2rem;
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid var(--csif-green);
+    }
+
+    @media (min-width: 900px) {
+      .card {
+        padding: 2.5rem 3rem;
+      }
+    }
+
+    .header {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-csif {
+      height: 60px;
+      width: auto;
+    }
+
+    .header-text h1 {
+      margin: 0;
       font-size: 1.6rem;
-      margin-bottom: 0.5rem;
+      color: var(--csif-text-dark);
     }
-    p {
-      margin: 0.2rem 0 0.6rem;
+
+    .header-text p {
+      margin: 0.25rem 0 0;
+      color: var(--csif-text-muted);
+      font-size: 0.95rem;
     }
+
+    .intro {
+      margin-bottom: 1.5rem;
+      padding: 0.85rem 1rem;
+      border-radius: 0.75rem;
+      background: rgba(0, 112, 66, 0.06);
+      font-size: 0.95rem;
+      color: var(--csif-text-muted);
+      border-left: 4px solid var(--csif-green-light);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--csif-text-dark);
+      margin: 1.5rem 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .section-title span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--csif-green-light);
+      display: inline-block;
+    }
+
     label {
       display: block;
       margin-top: 0.8rem;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--csif-text-dark);
     }
-    input[type="number"],
+
+    label small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--csif-text-muted);
+      margin-top: 0.1rem;
+    }
+
     input[type="text"] {
       width: 100%;
-      padding: 0.4rem;
-      margin-top: 0.2rem;
-      box-sizing: border-box;
+      padding: 0.55rem 0.7rem;
+      margin-top: 0.25rem;
+      border-radius: 0.55rem;
+      border: 1px solid #d1ddd7;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
-    .amarillo {
-      background-color: #fff8a6;
+
+    input.amarillo {
+      background: var(--csif-yellow);
+      border-color: #e8d88f;
     }
-    .resultado {
-      background-color: #f5f5f5;
+
+    input:focus {
+      outline: none;
+      border-color: var(--csif-green-light);
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.15);
+      background: #ffffff;
     }
+
+    .inputs-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .inputs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     button {
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.5rem;
       cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      background: var(--csif-green);
+      color: #ffffff;
+      width: 100%;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+      font-size: 0.95rem;
     }
-    .nota {
-      font-size: 0.9rem;
+
+    button:hover {
+      background: var(--csif-green-light);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .result-block {
       margin-top: 1rem;
-      color: #555;
+      padding: 0.85rem 1rem;
+      border-radius: 0.9rem;
+      background: #f5f7f6;
+      border: 1px solid #dbe4df;
+    }
+
+    .result-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 0.6rem;
+      align-items: center;
+      margin-top: 0.35rem;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--csif-text-muted);
+    }
+
+    .result-input {
+      margin-top: 0;
+      text-align: right;
+      background: #ffffff;
+    }
+
+    .nota {
+      font-size: 0.8rem;
+      margin-top: 1.2rem;
+      color: var(--csif-text-muted);
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
+  <main class="card">
+    <header class="header">
+      <!-- Asegúrate de que el nombre coincide con el archivo que subiste -->
+      <img src="logo_csif.png" alt="CSIF" class="logo-csif" />
+      <div class="header-text">
+        <h1>Calculadora subida salarial 2025–2028</h1>
+        <p>Central Sindical Independiente y de Funcionarios (CSIF)</p>
+      </div>
+    </header>
 
-  <h1>Calculadora subidas sueldo bruto 2025–2028 - CSIF</h1>
-  <p>Rellena solo las casillas amarillas; el resto se calcula automáticamente.</p>
+    <div class="intro">
+      Rellena solo las casillas amarillas con tu sueldo bruto mensual sin productividad y la productividad
+      mensual. La calculadora estimará las subidas previstas y los atrasos orientativos.
+    </div>
 
-  <label for="sueldoBase">
-    Sueldo mensual bruto sin productividad<br />
-    <small>(Sobre este sueldo se aplican las subidas)</small>
-  </label>
-  <input
-    id="sueldoBase"
-    class="amarillo"
-    type="text"
-    placeholder="Importe en euros. Puedes usar coma o punto."
-  />
+    <h2 class="section-title"><span></span>Datos de entrada</h2>
+    <div class="inputs-grid">
+      <div>
+        <label for="sueldoBase">
+          Sueldo mensual bruto sin productividad
+          <small>Sobre este importe se aplican las subidas.</small>
+        </label>
+        <input
+          id="sueldoBase"
+          class="amarillo"
+          type="text"
+          placeholder="Ej.: 2.100,00"
+        />
+      </div>
 
-  <label for="productividad">
-    Productividad mensual<br />
-    <small>Importe de productividad. No se le aplica la subida.</small>
-  </label>
-  <input
-    id="productividad"
-    class="amarillo"
-    type="text"
-    placeholder="Importe en euros. Puedes usar coma o punto."
-  />
+      <div>
+        <label for="productividad">
+          Productividad mensual
+          <small>Importe que no se ve afectado por la subida.</small>
+        </label>
+        <input
+          id="productividad"
+          class="amarillo"
+          type="text"
+          placeholder="Ej.: 250,00"
+        />
+      </div>
+    </div>
 
-  <button id="calcular">Calcular</button>
+    <button id="calcular">Calcular subida</button>
 
-  <label for="actual">Sueldo bruto mensual actual</label>
-  <input id="actual" class="resultado" type="text" readonly />
+    <h2 class="section-title"><span></span>Resultados</h2>
+    <div class="result-block">
+      <div class="result-row">
+        <div class="result-label">Sueldo bruto mensual actual</div>
+        <input id="actual" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="s2025">Sueldo bruto con la subida 2025 (2,5%)</label>
-  <input id="s2025" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Sueldo con subida 2025 (+2,5%)</div>
+        <input id="s2025" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="a2025">Atrasos 2025 (14 pagas)</label>
-  <input id="a2025" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Atrasos 2025 (2,5% x 14 pagas)</div>
+        <input id="a2025" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="s2026">Sueldo bruto con la subida 2026 (4% sobre el sueldo base actual)</label>
-  <input id="s2026" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Sueldo con subida 2026 (+4% sobre base)</div>
+        <input id="s2026" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="a2026">Atrasos 2026 (0,5% sobre el sueldo base, 14 pagas)</label>
-  <input id="a2026" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Atrasos 2026 (0,5% x 14 pagas)</div>
+        <input id="a2026" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="s2027">Sueldo bruto con la subida 2027 (8,5% sobre el sueldo base)</label>
-  <input id="s2027" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Sueldo con subida 2027 (+8,5% sobre base)</div>
+        <input id="s2027" class="result-input" type="text" readonly />
+      </div>
 
-  <label for="s2028">Sueldo bruto con la subida 2028 (11,5% sobre el sueldo base)</label>
-  <input id="s2028" class="resultado" type="text" readonly />
+      <div class="result-row">
+        <div class="result-label">Sueldo con subida 2028 (+11,5% sobre base)</div>
+        <input id="s2028" class="result-input" type="text" readonly />
+      </div>
+    </div>
 
-  <p class="nota">
-    Las subidas (2,5 %, 4 %, 8,5 % y 11,5 %) se calculan sobre el salario bruto sin incluir la productividad.
-    El resultado es orientativo y puede variar según la situación de cada empleado público.
-  </p>
+    <p class="nota">
+      Las subidas (2,5 %, 4 %, 8,5 % y 11,5 %) se calculan sobre el salario bruto sin incluir la productividad.
+      Los importes mostrados son orientativos y pueden variar en función de la normativa y de la situación
+      personal (tramos, retenciones, etc.).
+    </p>
+  </main>
 
   <script>
     function parseEuro(str) {
       if (!str) return 0;
       // Permitir coma o punto como separador decimal
-      str = str.replace(".", "").replace(",", ".");
+      str = str.replace(/\./g, "").replace(",", ".");
       const n = parseFloat(str);
       return isNaN(n) ? 0 : n;
     }
@@ -115,7 +310,7 @@
     function formatEuro(num) {
       return num.toLocaleString("es-ES", {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        maximumFractionDigits: 2,
       }) + " €";
     }
 
@@ -123,23 +318,17 @@
       const sueldoBase = parseEuro(document.getElementById("sueldoBase").value);
       const productividad = parseEuro(document.getElementById("productividad").value);
 
-      // Sueldo actual
+      if (!sueldoBase && !productividad) {
+        alert("Introduce al menos el sueldo base para realizar el cálculo.");
+        return;
+      }
+
       const actual = sueldoBase + productividad;
-
-      // Subida 2025: +2,5% sobre sueldo base
       const sueldo2025 = sueldoBase * 1.025 + productividad;
-      const atrasos2025 = sueldoBase * 0.025 * 14; // 2,5% de 14 pagas
-
-      // Subida 2026: +4% sobre el sueldo base (total acumulado 4% sobre base)
+      const atrasos2025 = sueldoBase * 0.025 * 14;
       const sueldo2026 = sueldoBase * 1.04 + productividad;
-
-      // Atrasos 2026: 0,5% sobre el sueldo base en 14 pagas
       const atrasos2026 = sueldoBase * 0.005 * 14;
-
-      // Subida 2027: 8,5% sobre el sueldo base
       const sueldo2027 = sueldoBase * 1.085 + productividad;
-
-      // Subida 2028: 11,5% sobre el sueldo base
       const sueldo2028 = sueldoBase * 1.115 + productividad;
 
       document.getElementById("actual").value = formatEuro(actual);
